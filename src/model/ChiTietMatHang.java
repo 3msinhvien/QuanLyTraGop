@@ -6,16 +6,18 @@ public class ChiTietMatHang implements Serializable{
     private double donGia;
     private int soLuong;
     private double thanhTien;
+    private MatHang matHang;
 
     public ChiTietMatHang() {
         super();
     }
-    public ChiTietMatHang(int id, double donGia, int soLuong, double thanhTien) {
+    public ChiTietMatHang(int id, double donGia, int soLuong, double thanhTien, MatHang matHang) {
         super();
         this.id = id;
         this.donGia = donGia;
         this.soLuong = soLuong;
         this.thanhTien = thanhTien;
+        this.matHang = matHang;
     }
     public int getId() {
         return id;
@@ -41,5 +43,12 @@ public class ChiTietMatHang implements Serializable{
     public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
     }
+    public MatHang getMatHang() {
+        return matHang;
+    }
+    public void setMatHang(MatHang matHang) {
+        this.matHang = matHang;
+    }
+
 
 }

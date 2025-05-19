@@ -13,11 +13,11 @@ public class HopDong implements Serializable {
     private KhachHang khachHang;
     private DoiTac doiTac;
     private ArrayList<DotThanhToan> dsDotThanhToan = new ArrayList<>();
-    private ArrayList<MatHang> dsMatHang = new ArrayList<>();
+    private ArrayList<ChiTietMatHang> dsMatHang = new ArrayList<>();
     
     public HopDong() {
         super();
-        ArrayList<MatHang> dsMatHang = new ArrayList<>();
+        ArrayList<ChiTietMatHang> dsMatHang = new ArrayList<>();
         ArrayList<DotThanhToan> dsDotThanhToan = new ArrayList<>();
     }
 
@@ -123,12 +123,12 @@ public class HopDong implements Serializable {
     }
 
 
-    public ArrayList<MatHang> getDsMatHang() {
+    public ArrayList<ChiTietMatHang> getDsMatHang() {
         return dsMatHang;
     }
 
 
-    public void setDsMatHang(ArrayList<MatHang> dsMatHang) {
+    public void setDsMatHang(ArrayList<ChiTietMatHang> dsMatHang) {
         this.dsMatHang = dsMatHang;
     }
     
