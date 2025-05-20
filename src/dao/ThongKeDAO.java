@@ -30,7 +30,8 @@ public class ThongKeDAO extends DAO {
                 "FROM tblKhachHang " +
                 "JOIN tblHopDong ON tblKhachHang.ID = tblHopDong.tblKhachHangID " +
                 "JOIN tblDotThanhToan ON tblHopDong.ID = tblDotThanhToan.tblHopDongID " +
-                "GROUP BY tblKhachHang.id, tblKhachHang.ten, tblKhachHang.sdt";
+                "GROUP BY tblKhachHang.id, tblKhachHang.ten, tblKhachHang.sdt " +
+                "ORDER BY tongDuNoCon DESC";
 
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -57,7 +58,7 @@ public class ThongKeDAO extends DAO {
 
 }
 
-// Lớp test riêng để kiểm tra phương thức getThongKe
+// test thông tin trả ra
 class ThongKeDAOTest {
     public static void main(String[] args) {
         ThongKeDAO thongKeDAO = new ThongKeDAO();

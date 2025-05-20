@@ -6,14 +6,18 @@ import java.awt.*;
 import model.KhachHang;
 import dao.KhachHangDAO;
 import model.HopDong;
+import model.ThongKe;
 import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class gdDSHopDongFrm extends JFrame {
     private JTable tblDSHopDong;
-    private KhachHang khachHang;
+    private ThongKe thongKe;
+    private ArrayList<HopDong> dsHopDong;
 
-    public gdDSHopDongFrm(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public gdDSHopDongFrm(ThongKe thongKe) {
+        this.thongKe = thongKe;
 
         // Khởi tạo giao diện
         setTitle("Danh sách hợp đồng");
@@ -21,7 +25,7 @@ public class gdDSHopDongFrm extends JFrame {
 
         // Panel chứa tiêu đề
         JPanel titlePanel = new JPanel();
-        JLabel lblTitle = new JLabel("Danh sách hợp đồng của khách hàng: " + khachHang.getTen());
+        JLabel lblTitle = new JLabel("Danh sách hợp đồng của khách hàng: " + thongKe.getTen());
         lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
         titlePanel.add(lblTitle);
         add(titlePanel, BorderLayout.NORTH);
@@ -32,8 +36,8 @@ public class gdDSHopDongFrm extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // Panel chứa nút điều khiển
-        JPanel buttonPanel = new JPanel();
-        JButton btnDong = new JButton("Đóng");
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton btnDong = new JButton("Quay lại");
         btnDong.setBackground(new Color(144, 238, 144));
         btnDong.setPreferredSize(new Dimension(100, 30));
         buttonPanel.add(btnDong);
@@ -41,6 +45,22 @@ public class gdDSHopDongFrm extends JFrame {
 
         // Load dữ liệu
         loadTableData();
+
+        // Thêm mouse listener cho bảng
+        tblDSHopDong.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tblDSHopDong.getSelectedRow();
+                int column = tblDSHopDong.getSelectedColumn();
+
+                // Kiểm tra nếu user click vào cột id hợp đồng
+                if (column == 1 && row >= 0) {
+                    HopDong selectedHopDong = dsHopDong.get(row);
+                    gdChiTietHopDongFrm cthd = new gdChiTietHopDongFrm(thongKe, selectedHopDong.getId());
+                    cthd.setVisible(true);
+                }
+            }
+        });
 
         // Thêm action listener
         btnDong.addActionListener(e -> dispose());
@@ -53,7 +73,7 @@ public class gdDSHopDongFrm extends JFrame {
 
     private void loadTableData() {
         KhachHangDAO khachHangDAO = new KhachHangDAO();
-        ArrayList<HopDong> dsHopDong = khachHangDAO.getDSHopDong(khachHang.getId());
+        dsHopDong = khachHangDAO.getDSHopDong(thongKe.getId());
 
         String[] columnNames = {
                 "STT", "Mã HĐ", "Ngày ký", "Tổng tiền vay", "Tổng số lần trả", "Tổng dư nợ", "Tổng dư nợ quá hạn"

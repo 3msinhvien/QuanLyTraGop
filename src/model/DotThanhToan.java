@@ -6,17 +6,17 @@ import java.util.Date;
 public class DotThanhToan implements Serializable {
     private int id;
     private Date ngayThanhToan;
-    private double soTienPhaiThanhToan;
+    private double soTienThanhToan;
     private int trangThai;
 
     public DotThanhToan() {
         super();
     }
 
-    public DotThanhToan(Date ngayThanhToan, double soTienPhaiThanhToan, int trangThai) {
+    public DotThanhToan(Date ngayThanhToan, double soTienThanhToan, int trangThai) {
         super();
         this.ngayThanhToan = ngayThanhToan;
-        this.soTienPhaiThanhToan = soTienPhaiThanhToan;
+        this.soTienThanhToan = soTienThanhToan;
         this.trangThai = trangThai;
     }
 
@@ -36,12 +36,12 @@ public class DotThanhToan implements Serializable {
         this.ngayThanhToan = ngayThanhToan;
     }
 
-    public double getSoTienPhaiThanhToan() {
-        return soTienPhaiThanhToan;
+    public double getSoTienThanhToan() {
+        return soTienThanhToan;
     }
 
-    public void setSoTienPhaiThanhToan(double soTienPhaiThanhToan) {
-        this.soTienPhaiThanhToan = soTienPhaiThanhToan;
+    public void setSoTienThanhToan(double soTienThanhToan) {
+        this.soTienThanhToan = soTienThanhToan;
     }
 
     public int getTrangThai() {

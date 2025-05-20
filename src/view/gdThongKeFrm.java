@@ -33,7 +33,7 @@ public class gdThongKeFrm extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // Panel chứa nút Quay lại
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         btnQuayLai = new JButton("Quay lại");
         btnQuayLai.setBackground(new Color(144, 238, 144)); // Light green color
         btnQuayLai.setPreferredSize(new Dimension(100, 30));

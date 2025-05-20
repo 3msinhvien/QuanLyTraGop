@@ -12,7 +12,6 @@ public class DoiTac implements Serializable {
 
     public DoiTac() {
         super();
-        ArrayList<MatHang> dsMatHang = new ArrayList<>();
     }
 
     public DoiTac(String ten, String diaChi, String thongTinLienHe, String thongTinThanhToan) {

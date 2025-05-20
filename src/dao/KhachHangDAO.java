@@ -19,39 +19,39 @@ import model.HopDong;
 public class KhachHangDAO extends DAO {
     public ArrayList<HopDong> getDSHopDong(int khachHangId) {
         ArrayList<HopDong> dsHopDong = new ArrayList<>();
-        String sql = 
-    "SELECT " +
-    "    h.ID AS hopDongId, " +
-    "    h.ngayKy, " +
-    "    COUNT(dtt.ID) AS tongSoLanTra, " +
-    "    SUM(dtt.soTienThanhToan) AS tongTienVay, " +
-    "    SUM(CASE WHEN dtt.trangThai = 0 THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNo, " +
-    "    SUM(CASE WHEN dtt.trangThai = 0 AND dtt.ngayThanhToan < CURRENT_DATE THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNoQuaHan " +
-    "FROM " +
-    "    tblHopDong h " +
-    "LEFT JOIN " +
-    "    tblDotThanhToan dtt ON h.ID = dtt.tblHopDongID " +
-    "WHERE " +
-    "    h.tblKhachHangID = ? " +
-    "GROUP BY " +
-    "    h.ID, h.ngayKy " +
-    "ORDER BY " +
-    "    h.ngayKy DESC";
+        String sql = "SELECT " +
+                "    h.ID AS hopDongId, " +
+                "    h.ngayKy, " +
+                "    COUNT(dtt.ID) AS tongSoLanTra, " +
+                "    SUM(dtt.soTienThanhToan) AS tongTienVay, " +
+                "    SUM(CASE WHEN dtt.trangThai = 0 THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNo, " +
+                "    SUM(CASE WHEN dtt.trangThai = 0 AND dtt.ngayThanhToan < CURRENT_DATE THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNoQuaHan "
+                +
+                "FROM " +
+                "    tblHopDong h " +
+                "LEFT JOIN " +
+                "    tblDotThanhToan dtt ON h.ID = dtt.tblHopDongID " +
+                "WHERE " +
+                "    h.tblKhachHangID = ? " +
+                "GROUP BY " +
+                "    h.ID, h.ngayKy " +
+                "ORDER BY " +
+                "    tongDuNo DESC, h.ngayKy DESC";
 
-    try {
-        PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setInt(1, khachHangId);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            HopDong hopDong = new HopDong();
-            hopDong.setId(rs.getInt("hopDongId"));
-            hopDong.setNgayKy(rs.getDate("ngayKy"));
-            hopDong.setTongSoLanTra(rs.getInt("tongSoLanTra"));
-            hopDong.setTongTienVay(rs.getDouble("tongTienVay"));
-            hopDong.setTongDuNo(rs.getDouble("tongDuNo"));
-            hopDong.setTongDuNoQuaHan(rs.getDouble("tongDuNoQuaHan"));
-            dsHopDong.add(hopDong);
-        }
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, khachHangId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                HopDong hopDong = new HopDong();
+                hopDong.setId(rs.getInt("hopDongId"));
+                hopDong.setNgayKy(rs.getDate("ngayKy"));
+                hopDong.setTongSoLanTra(rs.getInt("tongSoLanTra"));
+                hopDong.setTongTienVay(rs.getDouble("tongTienVay"));
+                hopDong.setTongDuNo(rs.getDouble("tongDuNo"));
+                hopDong.setTongDuNoQuaHan(rs.getDouble("tongDuNoQuaHan"));
+                dsHopDong.add(hopDong);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,4 +75,3 @@ class KhachHangDAOTest {
         }
     }
 }
-
