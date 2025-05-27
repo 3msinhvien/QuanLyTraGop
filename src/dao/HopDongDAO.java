@@ -30,24 +30,6 @@ public class HopDongDAO extends DAO {
             e.printStackTrace();
         }
 
-        //Lấy thông tin khách hàng (tạm thời tắt vì có thể truyền từ giao diện Thống Kê sang)
-        // KhachHang khachHang = new KhachHang();
-        // String khachHangsql = "SELECT * FROM tblKhachHang JOIN tblHopDong ON tblKhachHang.id = tblHopDong.tblKhachHangID WHERE tblHopDong.id = ?";
-        // try {
-        //     PreparedStatement ps = con.prepareStatement(khachHangsql);
-        //     ps.setInt(1, hopDongId);
-        //     ResultSet rs = ps.executeQuery();
-        //     while (rs.next()) {
-        //         khachHang.setTen(rs.getString("ten"));
-        //         khachHang.setDiaChi(rs.getString("diaChi"));
-        //         khachHang.setCccd(rs.getString("cccd"));
-        //         khachHang.setDiaChi(rs.getString("diaChi"));
-        //         khachHang.setSdt(rs.getString("sdt"));
-        //         khachHang.setEmail(rs.getString("email"));
-        //     }
-        // } catch (Exception e) {
-        //     throw new RuntimeException(e);
-        // }
 
         // Lấy ra danh sách mặt hàng
         ArrayList<ChiTietMatHang> listChiTietMatHang = new ArrayList<>();
@@ -94,34 +76,15 @@ public class HopDongDAO extends DAO {
             throw new RuntimeException(e);
         }
 
-        ArrayList<DotThanhToan> listDotThanhToan = new ArrayList<>();
-        String DotThanhToanSql = "SELECT * FROM tblDotThanhToan WHERE tblHopDongID = ?";
-        try {
-                PreparedStatement ps = con.prepareStatement(DotThanhToanSql);
-                ps.setInt(1, hopDongId);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    DotThanhToan dotThanhToan = new DotThanhToan();
-                    dotThanhToan.setId(rs.getInt("id"));
-                    dotThanhToan.setNgayThanhToan(rs.getDate("ngayThanhToan"));
-                    dotThanhToan.setSoTienThanhToan(rs.getDouble("soTienThanhToan"));
-                    dotThanhToan.setTrangThai(rs.getInt("trangThai"));
-                    listDotThanhToan.add(dotThanhToan);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
 
         //hopDong.setKhachHang(khachHang);
         hopDong.setDsMatHang(listChiTietMatHang);
         hopDong.setDoiTac(doiTac);
-        hopDong.setDsDotThanhToan(listDotThanhToan);
+        //hopDong.setDsDotThanhToan(listDotThanhToan);
         return hopDong;
 
     }
 }
-
-
 
 // test thông tin trả ra
 class HopDongDAOTest {

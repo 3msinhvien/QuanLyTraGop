@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.ThongKe;
-import java.sql.Date;
+import model.DotThanhToan;
 
 public class ThongKeDAO extends DAO {
 
@@ -47,6 +47,8 @@ public class ThongKeDAO extends DAO {
                 thongKe.setGhiChu(rs.getString("ghiChu"));
                 thongKe.setTongDuNoCon(rs.getDouble("tongDuNoCon"));
                 thongKe.setTongDuNoQuaHan(rs.getDouble("tongDuNoQuaHan"));
+                ArrayList<DotThanhToan> dsDotThanhToan = getDsDotThanhToanByKhachHangId(thongKe.getId());
+                thongKe.setDsDotThanhToan(dsDotThanhToan);
                 result.add(thongKe);
             }
         } catch (Exception e) {
@@ -54,6 +56,30 @@ public class ThongKeDAO extends DAO {
         }
 
         return result;
+    }
+
+    public ArrayList<DotThanhToan> getDsDotThanhToanByKhachHangId(int khachHangId) {
+        ArrayList<DotThanhToan> list = new ArrayList<>();
+        String sql = "SELECT dtt.*, dtt.tblHopDongID FROM tblDotThanhToan dtt " +
+                "JOIN tblHopDong hd ON dtt.tblHopDongID = hd.ID " +
+                "WHERE hd.tblKhachHangID = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, khachHangId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                DotThanhToan dtt = new DotThanhToan();
+                dtt.setId(rs.getInt("id"));
+                dtt.setNgayThanhToan(rs.getDate("ngayThanhToan"));
+                dtt.setSoTienThanhToan(rs.getDouble("soTienThanhToan"));
+                dtt.setTrangThai(rs.getInt("trangThai"));
+                dtt.setHopDongId(rs.getInt("tblHopDongID"));
+                list.add(dtt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

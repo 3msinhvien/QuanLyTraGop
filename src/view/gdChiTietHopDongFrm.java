@@ -26,7 +26,7 @@ public class gdChiTietHopDongFrm extends JFrame {
         HopDong hopDong = hopDongDAO.getChiTietHopDong(hopDongId);
         DoiTac doiTac = hopDong.getDoiTac();
         ArrayList<ChiTietMatHang> dsMatHang = hopDong.getDsMatHang();
-        ArrayList<DotThanhToan> dsDotThanhToan = hopDong.getDsDotThanhToan();
+        // ArrayList<DotThanhToan> dsDotThanhToan = hopDong.getDsDotThanhToan();
 
         // Tiêu đề
         JLabel lblTitle = new JLabel("Chi tiết hợp đồng", SwingConstants.CENTER);
@@ -84,16 +84,24 @@ public class gdChiTietHopDongFrm extends JFrame {
 
         // Danh sách đợt thanh toán
         centerPanel.add(new JLabel("4. Danh sách các đợt thanh toán"));
+        ArrayList<DotThanhToan> dsDotThanhToanThongKe = thongKe.getDsDotThanhToan();
+        ArrayList<DotThanhToan> dsDotThanhToanHopDong = new ArrayList<>();
+        if (dsDotThanhToanThongKe != null) {
+            for (DotThanhToan dtt : dsDotThanhToanThongKe) {
+                if (dtt.getHopDongId() == hopDongId) {
+                    dsDotThanhToanHopDong.add(dtt);
+                }
+            }
+        }
         String[] colDotTT = { "kỳ", "Thời điểm thanh toán", "Số tiền thanh toán", "Trạng thái" };
-        Object[][] dataDotTT = new Object[dsDotThanhToan.size()][colDotTT.length];
-        for (int i = 0; i < dsDotThanhToan.size(); i++) {
-            DotThanhToan dotThanhToan = dsDotThanhToan.get(i);
+        Object[][] dataDotTT = new Object[dsDotThanhToanHopDong.size()][colDotTT.length];
+        for (int i = 0; i < dsDotThanhToanHopDong.size(); i++) {
+            DotThanhToan dotThanhToan = dsDotThanhToanHopDong.get(i);
             dataDotTT[i][0] = i + 1;
             dataDotTT[i][1] = dotThanhToan.getNgayThanhToan();
             dataDotTT[i][2] = dotThanhToan.getSoTienThanhToan();
             dataDotTT[i][3] = dotThanhToan.getTrangThai();
         }
-
         tblDotThanhToan = new JTable(new DefaultTableModel(dataDotTT, colDotTT));
         JScrollPane spDotTT = new JScrollPane(tblDotThanhToan);
         spDotTT.setPreferredSize(new Dimension(600, 60));

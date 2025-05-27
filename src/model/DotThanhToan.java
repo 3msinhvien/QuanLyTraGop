@@ -8,6 +8,7 @@ public class DotThanhToan implements Serializable {
     private Date ngayThanhToan;
     private double soTienThanhToan;
     private int trangThai;
+    private int hopDongId;
 
     public DotThanhToan() {
         super();
@@ -52,5 +53,12 @@ public class DotThanhToan implements Serializable {
         this.trangThai = trangThai;
     }
 
-}
+    public int getHopDongId() {
+        return hopDongId;
+    }
 
+    public void setHopDongId(int hopDongId) {
+        this.hopDongId = hopDongId;
+    }
+
+}

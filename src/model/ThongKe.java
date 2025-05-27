@@ -1,14 +1,17 @@
 package model;
 
-public class ThongKe extends KhachHang{
-    private double tongDuNoCon ;
+import java.util.ArrayList;
+
+public class ThongKe extends KhachHang {
+    private double tongDuNoCon;
     private double tongDuNoQuaHan;
+    private ArrayList<DotThanhToan> dsDotThanhToan;
 
     public ThongKe() {
         super();
     }
 
-    public ThongKe(int id, String ten, double tongDuNoCon, double tongDuNoQuaHan) {
+    public ThongKe(int id, String ten, double tongDuNoCon, double tongDuNoQuaHan, DotThanhToan dotThanhToan) {
         super();
         this.tongDuNoCon = tongDuNoCon;
         this.tongDuNoQuaHan = tongDuNoQuaHan;
@@ -30,6 +33,12 @@ public class ThongKe extends KhachHang{
         this.tongDuNoQuaHan = tongDuNoQuaHan;
     }
 
-    
+    public void setDsDotThanhToan(ArrayList<DotThanhToan> ds) {
+        this.dsDotThanhToan = ds;
+    }
+
+    public ArrayList<DotThanhToan> getDsDotThanhToan() {
+        return dsDotThanhToan;
+    }
 
 }

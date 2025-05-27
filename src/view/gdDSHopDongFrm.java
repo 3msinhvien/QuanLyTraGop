@@ -76,18 +76,44 @@ public class gdDSHopDongFrm extends JFrame {
         dsHopDong = khachHangDAO.getDSHopDong(thongKe.getId());
 
         String[] columnNames = {
-                "STT", "Mã HĐ", "Ngày ký", "Tổng tiền vay", "Tổng số lần trả", "Tổng dư nợ", "Tổng dư nợ quá hạn"
+                "STT", "Mã HĐ", "Ngày ký", "Tổng tiền vay", "Tổng số lần trả", "Tổng dư nợ còn", "Tổng dư nợ quá hạn"
         };
 
         Object[][] data = new Object[dsHopDong.size()][columnNames.length];
+        ArrayList<model.DotThanhToan> dsDotThanhToan = thongKe.getDsDotThanhToan();
         for (int i = 0; i < dsHopDong.size(); i++) {
             data[i][0] = i + 1;
             data[i][1] = dsHopDong.get(i).getId();
             data[i][2] = dsHopDong.get(i).getNgayKy();
-            data[i][3] = dsHopDong.get(i).getTongTienVay();
-            data[i][4] = dsHopDong.get(i).getTongSoLanTra();
-            data[i][5] = dsHopDong.get(i).getTongDuNo();
-            data[i][6] = dsHopDong.get(i).getTongDuNoQuaHan();
+            double tongTienPhaiTra = 0;
+            int tongSoLanTra = 0;
+            double tongDuNo = 0;
+            double tongDuNoQuaHan = 0;
+            if (dsDotThanhToan != null) {
+                int hopDongId = dsHopDong.get(i).getId();
+                java.util.Date now = new java.util.Date();
+                for (model.DotThanhToan dtt : dsDotThanhToan) {
+                    if (dtt.getHopDongId() == hopDongId) {
+                        tongTienPhaiTra += dtt.getSoTienThanhToan();
+                        tongSoLanTra++;
+                        if (dtt.getTrangThai() == 0) {
+                            tongDuNo += dtt.getSoTienThanhToan();
+                            if (dtt.getNgayThanhToan().before(now)) {
+                                tongDuNoQuaHan += dtt.getSoTienThanhToan();
+                            }
+                        }
+                    }
+                }
+                data[i][3] = tongTienPhaiTra;
+                data[i][4] = tongSoLanTra;
+                data[i][5] = tongDuNo;
+                data[i][6] = tongDuNoQuaHan;
+            } else {
+                data[i][3] = 0;
+                data[i][4] = 0;
+                data[i][5] = 0;
+                data[i][6] = 0;
+            }
         }
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {

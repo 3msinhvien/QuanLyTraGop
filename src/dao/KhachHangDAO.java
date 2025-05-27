@@ -21,22 +21,9 @@ public class KhachHangDAO extends DAO {
         ArrayList<HopDong> dsHopDong = new ArrayList<>();
         String sql = "SELECT " +
                 "    h.ID AS hopDongId, " +
-                "    h.ngayKy, " +
-                "    COUNT(dtt.ID) AS tongSoLanTra, " +
-                "    SUM(dtt.soTienThanhToan) AS tongTienVay, " +
-                "    SUM(CASE WHEN dtt.trangThai = 0 THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNo, " +
-                "    SUM(CASE WHEN dtt.trangThai = 0 AND dtt.ngayThanhToan < CURRENT_DATE THEN dtt.soTienThanhToan ELSE 0 END) AS tongDuNoQuaHan "
-                +
-                "FROM " +
-                "    tblHopDong h " +
-                "LEFT JOIN " +
-                "    tblDotThanhToan dtt ON h.ID = dtt.tblHopDongID " +
-                "WHERE " +
-                "    h.tblKhachHangID = ? " +
-                "GROUP BY " +
-                "    h.ID, h.ngayKy " +
-                "ORDER BY " +
-                "    tongDuNo DESC, h.ngayKy DESC";
+                "    h.ngayKy " +
+                "FROM tblHopDong h " +
+                "WHERE h.tblKhachHangID = ? ";
 
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -46,10 +33,6 @@ public class KhachHangDAO extends DAO {
                 HopDong hopDong = new HopDong();
                 hopDong.setId(rs.getInt("hopDongId"));
                 hopDong.setNgayKy(rs.getDate("ngayKy"));
-                hopDong.setTongSoLanTra(rs.getInt("tongSoLanTra"));
-                hopDong.setTongTienVay(rs.getDouble("tongTienVay"));
-                hopDong.setTongDuNo(rs.getDouble("tongDuNo"));
-                hopDong.setTongDuNoQuaHan(rs.getDouble("tongDuNoQuaHan"));
                 dsHopDong.add(hopDong);
             }
         } catch (Exception e) {
